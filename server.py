@@ -110,13 +110,12 @@ def handle_client(client_socket):
                         conti = client_socket.recv(1024)
                         acknowledgment = pickle.loads(conti)
                         
-                        # Check acknowledgment here if needed
-                # Send end signal
+                        
                 end_signal = pickle.dumps("end")
                 client_socket.sendall(end_signal)
             except Exception as e:
                 print(f"Error during data transmission: {e}")
-                # Handle exceptions (like closing socket or logging error)
+            
 
 
 
@@ -140,11 +139,11 @@ def start_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(('localhost', 5000))
     server.listen(5)
-    print("[*] Kuunnellaan yhteyksiä osoitteessa localhost:")
+    print("listening to connections")
                                                                                                                           
     while True:
         client, addr = server.accept()
-        print(f"[*] Yhteys osoitteesta: {addr[0]}:{addr[1]}")
+        print(f"Connection from: {addr[0]}:{addr[1]}")
 
         client_handler = threading.Thread(target=handle_client, args=(client,))
         client_handler.start()
